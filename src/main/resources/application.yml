@@ -1,7 +1,9 @@
+##服务器配置
 server:
   port: 8082
   servlet:
     context-path: /myblog
+##spring 配置
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -14,3 +16,16 @@ spring:
 mybatis:
   type-aliases-package: com.spring.fastdfs.pojo
   mapper-locations: classpath:mappers/*.xml
+
+##fastdfs配置
+fdfs:
+  so-timeout: 1501
+  connect-timeout: 601
+  thumb-image:
+    width: 150
+    height: 150
+  web-server-url: http://112.74.170.55:80/
+  tracker-list: 112.74.170.55:22122
+  http:
+    anti_steal_token: true
+    secret_key: FastZHBDFS1234567890

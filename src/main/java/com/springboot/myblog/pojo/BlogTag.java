@@ -21,7 +21,7 @@ public class BlogTag {
     /* 标签名 */
     private String tagName;
 
-    /*  */
+    /* 是否删除 */
     private Byte isDeleted;
 
     /* 创建时间 */

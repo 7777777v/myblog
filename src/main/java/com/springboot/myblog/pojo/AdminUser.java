@@ -14,21 +14,24 @@ import java.util.List;
 @Data
 public class AdminUser {
 
-    /** 管理员id */
+    /* 管理员id */
     private Integer adminUserId;
 
-    /** 登录用户名 */
+    /* 登录用户名 */
     private String loginUserName;
 
-    /** 登录密码 */
+    /* 登录密码 */
     private String loginPassword;
 
-    /** 昵称 */
+    /* 昵称 */
     private String nickName;
 
-    /** 用户头像 */
+    /* 锁定标志 */
+    private Byte locked;
+
+    /* 用户头像 */
     private String userPic;
 
-    /** 登录记录 */
+    /* 登录记录 */
     private List<LoginRecord> loginRecords;
 }

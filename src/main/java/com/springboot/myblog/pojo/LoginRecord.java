@@ -32,5 +32,4 @@ public class LoginRecord {
     /* 用户表关联id */
     private Integer userId;
 
-
 }

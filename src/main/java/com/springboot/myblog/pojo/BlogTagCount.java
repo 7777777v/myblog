@@ -3,14 +3,14 @@ package com.springboot.myblog.pojo;
 import lombok.Data;
 
 /**
- * @ClassName BlogCount
+ * @ClassName BlogTagCount
  * @Description blog count
  * @Author 2985062714@qq.com
  * @Date 2019/8/6 16:24
  * @Version 1.0
  */
 @Data
-public class BlogCount {
+public class BlogTagCount {
 
     /* 标签id */
     private Integer tagId;

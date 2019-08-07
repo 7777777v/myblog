@@ -16,10 +16,10 @@ import java.util.Date;
 public class BlogComment {
 
     /* 评论id */
-    private Long commentId;
+    private Integer commentId;
 
     /* 博客id */
-    private Long blogId;
+    private Integer blogId;
 
     /* 评论者 */
     private String commentator;

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.myblog.dao.AdminUserMapper">
+    <resultMap id="BaseResultMap" type="com.springboot.myblog.pojo.AdminUser">
+        <id column="admin_user_id" jdbcType="INTEGER" property="adminUserId"/>
+        <result column="login_user_name" jdbcType="VARCHAR" property="loginUserName"/>
+        <result column="login_password" jdbcType="VARCHAR" property="loginPassword"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="locked" jdbcType="TINYINT" property="locked"/>
+        <result column="user_picture" jdbcType="VARCHAR" property="userPic"/>
+        <collection property="loginRecords" ofType="com.springboot.myblog.pojo.LoginRecord" column="admin_user_id">
+            <id column="record_id" property="recordId"/>
+            <result column="loginTime" property="login_time" jdbcType="TIMESTAMP"/>
+            <result column="logoutTime" property="logout_time" jdbcType="TIMESTAMP"/>
+            <result column="onlineTime" property="online_time" jdbcType="BIGINT"/>
+            <result column="userId" property="user_id" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        admin_user_id, login_user_name, login_password, nick_name, locked,userPic
+    </sql>
+    <select id="userLogin" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_admin_user
+        where login_user_name = #{userName,jdbcType=VARCHAR} AND login_password=#{password,jdbcType=VARCHAR}
+        AND locked = 0
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_admin_user
+        where admin_user_id = #{adminUserId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.springboot.myblog.pojo.AdminUser">
+        insert into tb_admin_user (login_user_name, login_password, nick_name, locked,userPic)
+        values (#{loginUserName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR},
+        #{nickName,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT}, #{userPic,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updatePasswordById">
+        update tb_admin_user
+        <set>
+            <if test="loginPassword != null">
+                login_password = #{loginPassword,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where admin_user_id = #{adminUserId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.springboot.myblog.pojo.AdminUser">
+        update tb_admin_user
+        <set>
+            <if test="loginUserName != null">
+                login_user_name = #{loginUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPassword != null">
+                login_password = #{loginPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="locked != null">
+                locked = #{locked,jdbcType=TINYINT},
+            </if>
+            <if test="userPic != null">
+                userPic = #{userPic,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where admin_user_id = #{adminUserId,jdbcType=INTEGER}
+    </update>
+</mapper>

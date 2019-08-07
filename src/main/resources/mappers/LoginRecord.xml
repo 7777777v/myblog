@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.myblog.dao.LoginRecordMapper">
+    <resultMap id="BaseResultMap" type="com.springboot.myblog.pojo.LoginRecord">
+        <id column="record_id" jdbcType="INTEGER" property="recordId"/>
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime"/>
+        <result column="logout_time" jdbcType="TIMESTAMP" property="logoutTime"/>
+        <result column="online_time" jdbcType="BIGINT" property="onlineTime"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        record_id, login_time, logout_time, online_time, user_id
+    </sql>
+
+    <insert id="insertLoginRecord" parameterType="com.springboot.myblog.pojo.LoginRecord">
+        insert into login_record (login_time, user_id)
+        values (#{loginTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER})
+    </insert>
+
+    <select id="findRecordsById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from login_record
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <update id="insertLogoutRecord" parameterType="com.springboot.myblog.pojo.LoginRecord">
+        update login_record
+        <set>
+            <if test="logoutTime != null">
+                logout_time = #{logoutTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="onlineTime != null">
+                online_time = #{onlineTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where record_id = #{recordId,jdbcType=INTEGER} and user_id = #{recordId,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteOnyById" parameterType="java.lang.Integer">
+        delete from login_record where record_id = #{recordId,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="batchDeleteById">
+        delete from login_record where record_id in
+        <foreach collection="recordIds" item="recordId" open="(" separator="," close=")">
+            #{recordId,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+</mapper>
